@@ -1,14 +1,13 @@
+import java.sql.*;
+
 /**
  * Created by İbrahim Başar YARGICI at 10.12.2021
  */
-
-import java.sql.*;
-
 public class DatabaseConnector {
     private static final String serverAddress = "localhost:5432";
     private static final String DBname = "Homework_12122021";
     private static final String clientName = "postgres";
-    private static final String connectionUrl = "jdbc:postgresql://localhost:5432/Homework_12122021";
+    private static final String connectionUrl = "jdbc:postgresql://" + serverAddress + "/" + DBname;
     private static Connection connection;
 
     public DatabaseConnector() {
@@ -22,7 +21,7 @@ public class DatabaseConnector {
         }
 
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Homework_12122021", "postgres", "");
+            connection = DriverManager.getConnection(connectionUrl, clientName, "");
         } catch (SQLException var2) {
             throw new SQLException(var2.getMessage());
         } catch (Exception var3) {
@@ -55,7 +54,6 @@ public class DatabaseConnector {
                     rs.getString("status"),
                     rs.getString("field"));
         }
-
     }
 
     public void getAll(Statement statement) throws Exception {
@@ -70,28 +68,33 @@ public class DatabaseConnector {
         }
     }
 
-    public void add(Statement statement, int id, String name, char gender, int status, String field) throws Exception {
-        String query = String.format("INSERT INTO artist VALUES (%d,'%s','%c',%d,'%s')", id, name, gender, status, field);
+    public void add(Statement statement, Artist artist) throws Exception {
+        String query = String.format("INSERT INTO artist VALUES (%d,'%s','%c',%d,'%s')",
+                artist.getId(),
+                artist.getName(),
+                artist.getGender(),
+                artist.getStatus(),
+                artist.getField());
 
         try {
             statement.executeUpdate(query);
-            System.out.println("Artist with id: " + id + " successfully added");
+            System.out.println("Artist with id: " + artist.getId() + " successfully added");
         } catch (SQLException var9) {
             throw new SQLException(var9.getMessage());
         }
     }
 
-    public void update(Statement statement, int id, String name, char gender, int status, String field) throws Exception {
+    public void update(Statement statement, Artist artist) throws Exception {
         String query = String.format("UPDATE artist SET name = '%s', gender = '%c', status = %d, field = '%s'  WHERE id = %d",
-                name,
-                gender,
-                status,
-                field,
-                id);
+                artist.getName(),
+                artist.getGender(),
+                artist.getStatus(),
+                artist.getField(),
+                artist.getId());
 
         try {
             statement.executeUpdate(query);
-            System.out.println("Artist with id: " + id + " successfully added");
+            System.out.println("Artist with id: " + artist.getId() + " successfully added");
         } catch (SQLException var9) {
             throw new SQLException(var9.getMessage());
         }
