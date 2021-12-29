@@ -1,0 +1,70 @@
+- To enter db in terminal, use docker exec -it <MONGO_ID>  bash
+example: docker exec -it fe863852f931  bash
+- In docker image, connect to server
+exmple: mongo mongodb://localhost:PORT -u USERNAME -p PASSWORD
+
+- Database is a physical container for collections.
+
+- Collection is a group of MongoDB documents = RDBMS table
+- Collections do not enforce a schema.
+- Documents within a collection can have different fields.
+
+- A document is a set of key-value pairs.
+- Documents have dynamic schema. Dynamic schema means that documents in the same collection do not need to have the same
+ set of fields or structure, and common fields in a collection's documents may hold different types of data.
+
+    RDBMS	        MongoDB
+    ____________    ____________
+    Database	    Database
+    Table	        Collection
+    Tuple/Row	    Document
+    column	        Field
+    Table Join	    Embedded Documents
+    Primary Key	    Primary Key (Default key _id provided by MongoDB itself)
+
+- Advantages of MongoDB
+Data is stored in the form of JSON style documents.
+Index on any attribute
+
+- Model Design
+Embedded Data Model: have (embed) all the related data in a single document, it is also known as de-normalized data model.
+Normalized Data Model: sub documents in the original document, using references.
+
+- Important:
+Do joins while write, not on read.
+Do complex aggregation in the schema.
+Optimize your schema for most frequent use cases.
+Combine objects into one document if you will use them together. Otherwise separate them (but make sure there should not be need of joins).
+
+
+-  "show dbs" -> show all dbs
+-  "use DATABASE_NAME" create or switch to db if exists.
+-  "db.getName()" -> return name of current db
+-  "db.createCollection(COLLECTION_NAME)" -> create collection in db
+-  "db.drop()" -> delete db
+-  "db.COLLECTION_NAME.drop()" -> delete collection
+-  "db.basar.insert({"name" = "workspace"})" -> creates basar collection if does not exists, than inserts document
+-  "show dbs" -> show all dbs
+- Example of a document:
+    student = {
+        "firstname": "Basar",
+        "lastname": "Yargici",
+        "isStudentActive": "True",
+        "favoriteLangs": [
+            "JAVA",
+            "KOTLIN",
+            "C"
+        ]
+    }
+- "db.COLLECTION_NAME.insert(document)" -> insert new record
+- "db.COLLECTION_NAME.save(document)" -> save new record, same with insert
+- "db.COLLECTION_NAME.insertOne(document)" -> insert only 1 document
+- "db.COLLECTION_NAME.insertMany(document)" -> insert many documents
+- "db.COLLECTION_NAME.find()" -> find() method will display all the documents in a non-structured way.
+- "db.COLLECTION_NAME.find().pretty()" -> find() method will display all the documents in a non-structured way
+and arranges them in an easy-to-read format.
+- "db.COLLECTION_NAME.update(SELECTION_CRITERIA, UPDATED_DATA)" -> updates the values in the existing document
+- "db.COLLECTION_NAME.save({_id:ObjectId(),NEW_DATA})" -> save() method replaces the existing document with the new
+document passed in the save() method.
+- "db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)" -> remove a document from the collection
+- "db.COLLECTION_NAME.remove({})" -> remove all documents
