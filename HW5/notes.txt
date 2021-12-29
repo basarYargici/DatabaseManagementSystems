@@ -68,3 +68,5 @@ and arranges them in an easy-to-read format.
 document passed in the save() method.
 - "db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)" -> remove a document from the collection
 - "db.COLLECTION_NAME.remove({})" -> remove all documents
+- "db.COLLECTION_NAME.find({},{KEY:1})" -> if key value is 1, shows field -> projection
+- "db.COLLECTION_NAME.aggregate({$project:{NumberOfItemsInArray:{$size:"$ARRAY"}}}).pretty()" -> return size of array
